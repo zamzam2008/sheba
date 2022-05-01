@@ -1,0 +1,95 @@
+html{
+    /* background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%); */
+    /* background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%); */
+    background: url('../static/choice2.jpg') no-repeat center center fixed #000; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.belowOption {
+    background-color: aliceblue;
+    opacity: .9;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    position: absolute;
+    left: 50%;
+    top: 75%;
+    transform: translate(-50%, -50%);
+    color: #cc0404;
+}
+#t1{
+    
+    background-size: cover;
+    /* position: absolute; */
+    left: 50%;
+    /* top: 50%; */
+}
+
+.card{
+    color: #1F85F1;
+    /* z-index: 200; */
+    width: 200px;
+    height: 100px;
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.5); 
+    width: 100%;
+}
+.transDeatils{
+    margin-top: 30px;
+}
+.dataHolder{
+
+    opacity: .9;
+    position: absolute;
+    background-color: aliceblue;
+    left: 15%;
+    right: 15%;
+    top: 15%;
+    text-align: center;
+}
+@media screen and (max-width: 600px) {
+    .belowOption {
+        background-color: aliceblue;
+        opacity: .9;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        color: #cc0404;
+    }
+  }
+
+  .three h1 {
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 1.5em;
+    padding-bottom: 15px;
+    position: relative;
+  }
+  .three h1:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 5px;
+    width: 55px;
+    background-color: #111;
+  }
+  .three h1:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 2px;
+    height: 1px;
+    width: 95%;
+    max-width: 255px;
+    background-color: #333;
+  }

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sheba Filling Station</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/"
+          ><img src="../static/gas-pump.png" width="60px" height="60px" />Sheba
+          Filling Station</a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarTogglerDemo01"
+          aria-controls="navbarTogglerDemo01"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <div class="dropdown">
+              <button
+                class="nav-item btn btn-primary dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+              >
+                লেনদেন বিবরণ
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{% url 'HishabNikash:hnAddTransection' %}"
+                    >নতুন লেনদেন যোগ করুন</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="http://127.0.0.1:8000/transection/diesel"
+                    >চলতি মাসের লেনদেন বিবরণ: Diesel</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="http://127.0.0.1:8000/transection/octane"
+                    >চলতি মাসের লেনদেন বিবরণ: Octane</a
+                  >
+                </li>
+                <li><a class="dropdown-item" href="{% url 'HishabNikash:hnTranStatementDetails' %}">মাস নির্বাচন করুন</a></li>
+              </ul>
+            </div>
+            <div class="dropdown">
+              <button
+                class="nav-item btn btn-primary dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+              >
+                স্টক বিবরণ
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{% url 'HishabNikash:hnAddStock' %}"
+                    >স্টক যোগ করুন</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="http://127.0.0.1:8000/seestock/diesel"
+                    >স্টক বিবরণ: Diesel</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="http://127.0.0.1:8000/seestock/octane"
+                    >স্টক বিবরণ: Octane</a
+                  >
+                </li>
+              </ul>
+            </div>
+            <li class="nav-item">
+              <a
+                class="nav-item btn btn-primary"
+                href="{% url 'HishabNikash:hnCustomerList' %}"
+                type="button"
+                >ব্যক্তিগত ঋণ বিবরণ</a
+              >
+            </li>
+            <div class="dropdown">
+              <button
+                class="nav-item btn btn-primary dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+              >
+                সিএনজি লেনদেন
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{% url 'HishabNikash:hnAddCNGTransection' %}"
+                    >নতুন লেনদেন যোগ করুন</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{% url 'HishabNikash:hnCNGTransection' %}"
+                    >চলতি মাসের লেনদেন বিবরণ</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{% url 'HishabNikash:hnCNGMonthlyStatement' %}"
+                    >মাস নির্বাচন করুন</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container dataHolder">
+      <div class="row">
+        <p style="margin-left: 300px"></p>
+        <h1>স্টক হিসাব: {{oilType}}</h1>
+      </div>
+      <table class="table table-success table-hover">
+        <thead>
+          <tr>
+            <th scope="col">তারিখ</th>
+            <th scope="col">মোট তেলের পরিমাণ</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for record in trans %}
+          <tr>
+            <td>{{record.deliveryDate}}</td>
+            <td>{{record.oilQuantity}}</td>
+          </tr>
+
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
