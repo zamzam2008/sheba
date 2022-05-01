@@ -97,3 +97,10 @@ class GASTransection(models.Model):
     
     def __str__(self):
         return str(self.inDate)+'  ,  '+ str(self.quantity)+'  ,  '+str(self.totalSale) +'  ,  '+str(self.cashDeposited) +'  ,  '+str(self.perQubicLiter) 
+    
+class GASLastReading(models.Model):
+    date_added = models.DateTimeField(auto_now=True)
+    quantity = models.DecimalField(max_digits=19, decimal_places=3)
+    
+    def __str__(self):
+        return  str(self.quantity)

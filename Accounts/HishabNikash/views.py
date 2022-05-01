@@ -234,7 +234,7 @@ def addStock(req):
                 deliveryDate=date, oilQuantity=oilAmount, oilType=oilType)
             oilAmount += ot
             models.StockLeft.objects.filter(id=1).update(oilQuantity=oilAmount)
-        url = 'http://127.0.0.1:8000/seestock/'+oilType
+        url = '/seestock/'+oilType
         return redirect(url)
     else:
         return render(req, 'addStock.html')
@@ -329,8 +329,8 @@ def getCustomerINFO(id):
 def viewCNGTransection(req):
 
     month = datetime.now().month
-    # mydate = datetime.now()
-    # month_name = mydate.strftime("%B")
+    mydate = datetime.now()
+    month_name = mydate.strftime("%B")
     trans = models.GASTransection.objects.filter(inDate__month=month).all()
     cal = models.GASTransection.objects.filter(inDate__month=month).aggregate(
         Sum('totalSale'), Sum('cashDeposited'), Avg('perQubicLiter'))
@@ -350,16 +350,24 @@ def viewCNGTransection(req):
 
 
 def CNGaddTransection(req):
+    # today = datetime.today()
+    # yesterday = datetime.strftime(today - timedelta(days=1), '%d-%m-%Y')
+    yesterdayCMS = models.GASLastReading.objects.filter(
+        id=1).values('quantity').all()
+    lastCMS = yesterdayCMS[0]['quantity']
+
     if req.POST:
         inDate = req.POST['inDate']
         meterReading = Decimal(req.POST['meterReading'])
-        totalGasSale = Decimal(req.POST['gasQuantity'])
+        totalGasSale = meterReading - Decimal(lastCMS)
         cashDeposited = Decimal(req.POST['cash'])
         percentage = round((cashDeposited/totalGasSale), 3)
         per = Decimal(percentage)
         print(percentage, type(per))
         models.GASTransection.objects.create(
             inDate=inDate, quantity=meterReading, totalSale=totalGasSale, cashDeposited=cashDeposited, perQubicLiter=per)
+        models.GASLastReading.objects.filter(
+            id=1).update(quantity=meterReading)
         return redirect(reverse('HishabNikash:hnCNGTransection'))
     return render(req, 'addCNGTransection.html')
 
@@ -377,20 +385,24 @@ def viewCNGMonthlyTransection(req):
             inDate__range=[sDate, eDate]).order_by('inDate')
         if len(trans) == 0:
             No_Data = True
+            context = {
+                'displayData': displayData,
+                'No_Data': No_Data,
+                'trans': trans,
+            }
         else:
             displayData = True
-            cal = models.GASTransection.objects.filter(inDate__month=month).aggregate(
+            cal = models.GASTransection.objects.filter(inDate__range=[sDate, eDate]).aggregate(
                 Sum('totalSale'), Sum('cashDeposited'), Avg('perQubicLiter'))
             if cal['totalSale__sum']:
                 context = {
                     'total': True,
                     'SaleTotal': round(cal['totalSale__sum'], 3),
                     'totalCash': round(cal['cashDeposited__sum'], 3),
-                    'AverageSale': round(cal['perQubicLiter__sum'], 3)
+                    'AverageSale': round(cal['perQubicLiter__avg'], 3),
+                    'displayData': displayData,
+                    'No_Data': No_Data,
+                    'trans': trans,
                 }
-        context = {
-            'displayData': displayData,
-            'No_Data': No_Data,
-            'trans': trans,
-        }
+
     return render(req, 'viewMonthCNG.html', context=context)

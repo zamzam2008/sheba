@@ -35,8 +35,8 @@
               </button>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                 <li><a class="dropdown-item" href="{% url 'HishabNikash:hnAddTransection' %}">নতুন লেনদেন যোগ করুন</a></li>
-                <li><a class="dropdown-item" href="http://127.0.0.1:8000/transection/diesel">চলতি মাসের লেনদেন বিবরণ: Diesel</a></li>
-                <li><a class="dropdown-item" href="http://127.0.0.1:8000/transection/octane">চলতি মাসের লেনদেন বিবরণ: Octane</a></li>
+                <li><a class="dropdown-item" href="/transection/diesel">চলতি মাসের লেনদেন বিবরণ: Diesel</a></li>
+                <li><a class="dropdown-item" href="/transection/octane">চলতি মাসের লেনদেন বিবরণ: Octane</a></li>
                 <li><a class="dropdown-item" href="{% url 'HishabNikash:hnTranStatementDetails' %}">মাস নির্বাচন করুন</a></li>
               </ul>
             </div>
@@ -46,8 +46,8 @@
               </button>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                 <li><a class="dropdown-item" href="{% url 'HishabNikash:hnAddStock' %}">স্টক যোগ করুন</a></li>
-                <li><a class="dropdown-item" href="http://127.0.0.1:8000/seestock/diesel">স্টক বিবরণ: Diesel</a></li>
-                <li><a class="dropdown-item" href="http://127.0.0.1:8000/seestock/octane">স্টক বিবরণ: Octane</a></li>
+                <li><a class="dropdown-item" href="/seestock/diesel">স্টক বিবরণ: Diesel</a></li>
+                <li><a class="dropdown-item" href="/seestock/octane">স্টক বিবরণ: Octane</a></li>
               </ul>
             </div>
             <li class="nav-item">
@@ -124,6 +124,17 @@
                 
                 {% endfor %}
             </tbody>
+        {% if total %}
+            <tfoot>
+              <tr>
+                <td><strong>Total</strong></td>
+                <td><strong></strong></td>
+                <td><strong>{{SaleTotal}}</strong></td>
+                <td><strong>{{totalCash}}</strong></td>
+                <td><strong>{{AverageSale}}</strong></td>
+              </tr>
+            </tfoot>
+        {% endif %}
         </table>
     </div>
     {% endif %}
